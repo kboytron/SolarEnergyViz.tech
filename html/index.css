@@ -24,7 +24,11 @@ nav a {
 nav a + a {
     margin-left: 20px;
 }
-
+th, td{
+    border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+}
 h1 {
     color: #c8b61a;
     font-family: 'copperplate';
