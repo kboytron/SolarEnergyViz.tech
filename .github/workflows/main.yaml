@@ -6,7 +6,7 @@ jobs:
   get-clean-data: 
     runs-on: ubuntu-latest
     env:
-      Greeting: ${{ secrets.NSRDB_SECRET }}
+      API_KEY: ${{ secrets.NSRDB_SECRET }}
 
     steps:
     - name: Checkout code
