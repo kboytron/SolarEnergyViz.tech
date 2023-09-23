@@ -1,2 +1,3 @@
-# huiowa24Engie
-Project for UIowa Hackathon 2023
+# HackUIowa 2023
+
+Engie challenge with sprinkes of GitHub, DevOps, and WebDev.
