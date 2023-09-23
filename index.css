@@ -1,16 +1,32 @@
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'copperplate', sans-serif;
+    font-family: 'copperplate';
     background: #000000;
 }
 body {
-    color: #c8b61a; 
+    color: #d9c214; 
     font-family: 'copperplate';
     font-size: xx-large;
-    
+}
+.centered{ text-align: center;}
+
+nav {
+    text-align: center;
+    background-color: #d9c214;
+}
+nav a {
+    display: inline-block;
+    text-decoration: none;
+    color: #000000;
+    padding: 10px 20px;
+}
+
+nav a + a {
+    margin-left: 20px;
 }
 
 h1 {
     color: #c8b61a;
+    font-family: 'copperplate';
 }
