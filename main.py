@@ -1,36 +1,60 @@
-import csv
+import pandas as pd
 
-Silliken_size = 16.7225
+ev_solar_area = 16.7225
+cambus_area = 24.8171891
+
+def to_float(x):
+    try:
+        return float(x)
+    except ValueError:
+        return x
+
+def main():
+    df = pd.read_csv("data/solar_data.csv", skiprows=1)
+
+    # Convert the Date column to datetime
+    df['Date'] = pd.to_datetime(df['Date'])
+
+    # Convert numeric strings to float, while keeping non-numeric values as strings
+    df['EL_Solar_BusBarn_Total_KW'] = df['EL_Solar_BusBarn_Total_KW'].apply(to_float)
+    df['EL_Solar_BusBarn_KWH_Dtot'] = df['EL_Solar_BusBarn_KWH_Dtot'].apply(to_float)
+
+    # Find the unique days where EL_Solar_BusBarn_KWH_Dtot is "Calc Failed"
+    failed_dates = df[df['EL_Solar_BusBarn_KWH_Dtot'] == 'Calc Failed']['Date'].dt.date.unique()
+
+    for date in failed_dates:
+        # Calculate the total KW for the specific date
+        total_kw = df[df['Date'].dt.date == date]['EL_Solar_BusBarn_Total_KW'].sum()
+        
+        # Update the value in the EL_Solar_BusBarn_KWH_Dtot column for the given date
+        df.loc[(df['Date'].dt.date == date) & (df['EL_Solar_BusBarn_KWH_Dtot'] == 'Calc Failed'), 'EL_Solar_BusBarn_KWH_Dtot'] = total_kw
+    
+    # For rows with "No Good Data", calculate the values
+    no_good_rows = df[df['EL_Solar_BusBarn_Total_KW'] == "[-11059] No Good Data For Calculation"]
+    for index, row in no_good_rows.iterrows():
+        date = row['Date'].date()
+        
+        # Calculate the day's total KW
+        day_total_kw = float(df[df['Date'].dt.date == date]['EL_Solar_BusBarn_KWH_Dtot'].iloc[0])
+        
+        # Get valid KW data for that day
+        valid_kw = df[(df['Date'].dt.date == date) & (df['EL_Solar_BusBarn_Total_KW'] != "[-11059] No Good Data For Calculation")]['EL_Solar_BusBarn_Total_KW'].sum()
+        
+        # Calculate the total value to be distributed across the "No Good Data" rows
+        to_be_distributed = float(day_total_kw) - valid_kw
+        
+        # Count the "No Good Data" rows for that day
+        no_good_count = len(df[(df['Date'].dt.date == date) & (df['EL_Solar_BusBarn_Total_KW'] == "[-11059] No Good Data For Calculation")])
+        
+        # Calculate value per "No Good Data" row
+        value_per_row = to_be_distributed / no_good_count
+        
+        # Update the "No Good Data" rows with the calculated value
+        df.loc[index, 'EL_Solar_BusBarn_Total_KW'] = value_per_row
+
+    df.to_csv("data/cleaned_solar.csv", index=False)
+
+
+
 if __name__ == '__main__':
-    path = "C:/Users/Sai Tarun/PycharmProjects/Hackathon/clean_solar_data.csv"
-    daily_data = []
-    hourly_data = []
-
-    # Open the CSV file and read its contents
-    with open(path, 'r') as file:
-        csv_reader = csv.reader(file)
-
-        # Iterate through each row in the CSV file
-        for row in csv_reader:
-            # Check if the row has at least 4 values (0-based indexing)
-            if len(row) >= 4:
-                # Store the 3rd and 4th values (0-based indexing) in a sub-array
-                hourly_values = [row[3], row[4]]
-                daily_values = [row[3], row[4]]
-
-                # Append the sub-array to the data array
-                daily_data.append(daily_values)
-                hourly_data.append(hourly_values)
-
-    #del daily_data[:2]
-
-    for row in daily_data:
-
-        print("Date: ",row[0],"  |  Daily kwh: ",row[1])
-        daily_kwh = float(row[1])
-        solar_irradiance = float(3)
-        daily_conversion = daily_kwh/(solar_irradiance*Silliken_size)
-        print("Daily conversion: ",daily_conversion,"\n")
-
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()

@@ -9,7 +9,7 @@ import pandas as pd
 import urllib.parse
 import os
 
-API_KEY = "API-key"
+API_KEY = os.getenv("API_KEY")
 EMAIL = "dtemi2@illinois.edu"
 BASE_URL = "https://developer.nrel.gov/api/nsrdb/v2/solar/psm3-download.csv?"
 POINTS = [
@@ -42,7 +42,7 @@ def main():
 
                 data["DNI(KWH)"] = data["DNI"] / 1000
 
-                data.to_csv("data-{}.csv".format(name), index=False)
+                data.to_csv("data/data-{}.csv".format(name), index=False)
                 print(f'Response data (you should replace this print statement with your processing): {data}')
                 # You can use the following code to write it to a file
                 # data.to_csv('SingleBigDataPoint.csv')
