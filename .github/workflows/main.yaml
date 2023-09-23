@@ -1,0 +1,35 @@
+name: Dynamically Clean Data
+
+on: workflow_dispatch
+
+jobs:
+  get-clean-data: 
+    runs-on: ubuntu-latest
+    env:
+      Greeting: ${{ secrets.NSRDB_SECRET }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9  # Or any other version you wish to use
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run main.py
+      run: python main.py
+
+    - name: Run nsrdb_data_download.py
+      run: python nsrdb_data_download.py
+
+    - name: Upload data directory as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Clean Data
+        path: data/
