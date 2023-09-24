@@ -44,6 +44,8 @@ th {
 
 tr, td {
     font-size: x-small;
+    border: 1px solid #ccc;
+    text-align: center;
 }
 
 /* Header styles */
