@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <nav>
+    <a href="past.html">Back</a>
+  </nav>
+  </head>
+  <body>
+    <div>
+        <canvas id="myChart"></canvas>
+      </div>
+      
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
+      <script>
+        const ctx = document.getElementById('myChart');
+        
+        // Function to fetch and load the JSON data
+        async function fetchData() {
+            try {
+                const response = await fetch('data.json'); // Assuming 'data.json' is in the same directory as your HTML file.
+                const dataset = await response.json();
 
+                // Extract labels and data from the dataset
+                const labels = dataset.map(dataPoint => `${dataPoint.hour}/${dataPoint.day}`);
+                const data = dataset.map(dataPoint => dataPoint.efficiency);
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Efficiency',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Customize the bar color
+                            borderColor: 'rgba(75, 192, 192, 1)',     // Customize the border color
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching or parsing JSON:', error);
+            }
+        }
+
+        // Call the fetchData function to load the JSON data and create the chart
+        fetchData();
+    </script>
+  </body>
+  </html>
+  <link rel="stylesheet" href="index.css">
