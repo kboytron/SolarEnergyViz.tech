@@ -14,19 +14,40 @@
 </head>
 <body>
     <nav>
-        <a href="Compare.html">Back</a>
+        <a href="past.html">Back</a>
     </nav>
 
-    <table class="center-table", cellspacing = 0>
-        <tr>
-            <th>Date</th>
-            <th>Conversion Efficiency</th>
-        </tr>
-        <tr>
-            <td>12/2/2</td>
-            <td>wewee</td>
-            
-        </tr>
+    <table class="center-table", cellspacing = 0 id="csvTable">
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Total_KW</th>
+                <th>Siliken_energy_conversion</th>
+                <th>Uni_solar_energy_conversion</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
     </table>
+
+    <script>
+        fetch('solar_panel_compare.csv')
+            .then(response => response.text())
+            .then(data => {
+                const table = document.querySelector('#csvTable tbody');
+                const rows = data.split('\n').slice(1);
+
+                rows.forEach(row => {
+                    const cols = row.split(',');
+                    const tr = document.createElement('tr');
+                    cols.forEach(col => {
+                        const td = document.createElement('td');
+                        td.textContent = col;
+                        tr.appendChild(td);
+                    });
+                    table.appendChild(tr);
+                });
+            });
+    </script>
 </body>
 </html>

@@ -70,7 +70,7 @@ plt.ylabel('Energy Conversion', color='white')
 plt.tick_params(colors='white')
 
 # Adding the legend with white color
-plt.legend(loc='upper right', facecolor='black', edgecolor='white', fontsize='medium', framealpha=1)
+plt.legend(loc='upper right', facecolor='black', edgecolor='white', fontsize='medium', framealpha=1, labelcolor='white')
 
 # Save the plot as a .png file with a transparent background
 plt.savefig('html/plot-energy_conversion.png', transparent=True)
