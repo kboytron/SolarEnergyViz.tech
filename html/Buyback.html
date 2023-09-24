@@ -2,3 +2,27 @@
     <a href="index.html">Back to Home</a>
     </nav>
     <link rel="stylesheet" href="index.css">
+
+    <head>
+        <style>
+            /* Define a CSS grid layout with 2 rows and 2 columns */
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+                grid-gap: 10px; /* Gap between grid items */
+            }
+    
+            /* Style the text boxes (you can customize this further) */
+            .text-box {
+                border: 1px solid #ccc;
+                padding: 10px;
+                font-size: 16px;
+                width: 100%; /* Make the text boxes fill their grid cells */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="grid-container">
+            <input type="text" class="text-box" placeholder="Textbox 1">
+            <input type="text" class="text-box" placeholder="Textbox 2">
+    </body>
