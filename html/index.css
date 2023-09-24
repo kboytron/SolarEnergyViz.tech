@@ -65,7 +65,7 @@ footer {
 /* Generic div styles */
 div {
     color: #a9a9a9;
-    font-family: 'helvetica';
+    font-family: 'typewolf';
     margin-top: 0;
     font-size: large;
     text-align: center;
@@ -75,6 +75,7 @@ div {
 .Maintext {
     box-sizing: content-box;
     width: 800px;
-    height: 800px;
+    height: 120px;
     margin: 2% auto;
 }
+
