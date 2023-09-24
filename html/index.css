@@ -34,6 +34,25 @@ nav a + a {
     margin-left: 20px;
 }
 
+/* Define a grid layout for the AboutText items */
+.AboutText {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    grid-template-rows: repeat(2, auto); /* Two rows, adjust as needed */
+    gap: 10px; /* Adjust the gap between items */
+}
+
+/* Style for the nav items within AboutText */
+.nav-item {
+    display: inline-block;
+    text-decoration: none;
+    color: #000000;
+    padding: 10px 20px;
+    text-align: center; /* Center the text within each item */
+    
+}
+
+
 /* Table styles */
 th {
     border: 0.25px solid #ccc;
