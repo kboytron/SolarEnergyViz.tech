@@ -35,14 +35,15 @@ nav a + a {
 }
 
 /* Table styles */
-td, th {
+th {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: center;
+    font-size: medium;
 }
 
-th {
-    font-size: medium;
+tr, td {
+    font-size: x-small;
 }
 
 /* Header styles */
