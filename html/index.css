@@ -36,7 +36,7 @@ nav a + a {
 
 /* Table styles */
 th {
-    border: 1px solid #ccc;
+    border: 0.5px solid #ccc;
     padding: 8px;
     text-align: center;
     font-size: medium;
@@ -44,8 +44,12 @@ th {
 
 tr, td {
     font-size: x-small;
-    border: 1px solid #ccc;
+    border: 0.5px solid #ccc;
     text-align: center;
+}
+
+.center-table{
+    margin-left: 500px;
 }
 
 /* Header styles */
