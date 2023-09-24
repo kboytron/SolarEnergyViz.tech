@@ -1,32 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <nav>
-    <a href="index.html">Back to Home</a>
-  </nav>
-  <style>
-    /* Center the table within the container */
-    .center-table {
-        margin: 0 auto;
-    }
-</style>
+  <head>
+    <nav>
+      <a href="index.html">Back to Home</a>
+    </nav>
+    <style>
+      /* Center the table within the container */
+      .center-table {
+          margin: 0 auto;
+      }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SolarEnergyViz</title>
-</head>
-<body>
-    <table class="center-table" border="1">
+  </head>
+  <body>
+      <table class="center-table" border="1">
+        <tr>
+          <th>Date</th>
+          <th>Conversion Efficiency</th>
+        </tr>
+        <tr>
+          <td>12/2/2</td>
+          <td>wewee</td>
+        </tr>
+      </table>
 
-  <tr>
-    <th>Date</th>
-    <th>Conversion Efficiency</th>
-  </tr>
-  <tr>
-    <td>12/2/2</td>
-    <td>wewee</td>
-  </tr>
-</table>
-</body>
+  <script>
+    // Replace 'data.csv' with the path to your CSV file
+    fetch('daily_energy_conversion.csv')
+        .then(response => response.text())
+        .then(data => {
+            const table = document.querySelector('#csvTable tbody');
+            const rows = data.split('\n').slice(1); // Remove the header row
+
+            rows.forEach(row => {
+                const cols = row.split(',');
+                const tr = document.createElement('tr');
+                cols.forEach(col => {
+                    const td = document.createElement('td');
+                    td.textContent = col;
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+        });
+  </script>
+  </body>
 </html>
 <link rel="stylesheet" href="index.css">
 
