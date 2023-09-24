@@ -13,45 +13,40 @@
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       
       <script>
-        const ctx = document.getElementById('myChart');
-        
-        // Function to fetch and load the JSON data
-        async function fetchData() {
-            try {
-                const response = await fetch('data.json'); // Assuming 'data.json' is in the same directory as your HTML file.
-                const dataset = await response.json();
-
-                // Extract labels and data from the dataset
-                const labels = dataset.map(dataPoint => `${dataPoint.hour}/${dataPoint.day}`);
-                const data = dataset.map(dataPoint => dataPoint.efficiency);
-
-                new Chart(ctx, {
-                    type: 'bar',
+        // Fetch the JSON data from the file
+        fetch('https://github.com/dtemir/SolarEnergyViz.tech/blob/main/html/hourly_energy_conversion.json')
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(entry => entry.Date + ' ' + entry.Hour + ':00');
+                const totalKW = data.map(entry => entry.Total_KW);
+    
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: 'Efficiency',
-                            data: data,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Customize the bar color
-                            borderColor: 'rgba(75, 192, 192, 1)',     // Customize the border color
-                            borderWidth: 1
+                            label: 'Total KW',
+                            data: totalKW,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1,
+                            fill: false
                         }]
                     },
                     options: {
                         scales: {
-                            y: {
-                                beginAtZero: true
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'hour'
+                                }
                             }
                         }
                     }
                 });
-            } catch (error) {
-                console.error('Error fetching or parsing JSON:', error);
-            }
-        }
-
-        // Call the fetchData function to load the JSON data and create the chart
-        fetchData();
+    
+                // Now you can add event listeners to filter the chart by year or other units.
+            });
     </script>
   </body>
   </html>
