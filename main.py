@@ -1,7 +1,7 @@
 import pandas as pd
 
-ev_solar_area = 16.7225
-cambus_area = 24.8171891
+ev_solar_area = float(16.7225)
+cambus_area = float(24.8171891)
 
 def to_float(x):
     try:
@@ -129,9 +129,8 @@ def main():
     # Remove rows where 'DNI(KWH)' is greater than 100
     hourly_df = hourly_df[hourly_df['DNI(KWH)'] <= 100]
     hourly_df = hourly_df[hourly_df['Total_KW'] <= 100]
-    # Reset the index if needed
+    hourly_df = hourly_df[hourly_df['Energy_conversion'] <= 15]
     hourly_df.reset_index(drop=True, inplace=True)
-    # Print the modified hourly_df
     hourly_df.to_csv("data/hourly_energy_conversion.csv", index=False)
     print("Computed and saved hourly energy conversions")
 
@@ -150,15 +149,39 @@ def main():
         lambda row: float(row['Total_KW']) / (float(row['DNI(KWH)']) * ev_solar_area) if float(
             row['DNI(KWH)']) != 0 else 0, axis=1)
 
-    daily_df = daily_merged_df[['Date', 'Total_KW','DNI(KWH)' ,'Energy_conversion']]
+    daily_df = daily_merged_df[['Date', 'Total_KW','DNI(KWH)','Energy_conversion']]
+    daily_df = daily_df[daily_df['Energy_conversion'] <= 15]
+    daily_df.reset_index(drop=True, inplace=True)
     daily_df.to_csv("data/daily_energy_conversion.csv", index=False)
     print("Completed and saved Daily energy conversions")
 
     # <<<<<< Comparing Both Solar Panels >>>>>>>
     #create monthly data
+    daily_df = daily_df[daily_df['Date'].str.startswith('2023')]
+    daily_df['Year'] = pd.to_datetime(daily_df['Date']).dt.year
+    daily_df['Month'] = pd.to_datetime(daily_df['Date']).dt.strftime('%b %Y')  # Format as "Jan 2023"
+    grouped = daily_df.groupby(['Year', 'Month'])
+    monthly_df = grouped[['Total_KW']].sum().reset_index() # Calculate sums for 'Total_KW'
+    monthly_df['Month'] = pd.to_datetime(monthly_df['Month'], format='%b %Y') # Convert 'Month' back to datetime format for sorting
+
+    # Sort the DataFrame by 'Month' in ascending order
+    monthly_df = monthly_df.sort_values(by='Month')
+    monthly_df = monthly_df.drop("Year", axis=1)
+    monthly_df["Total_KW"] = monthly_df["Total_KW"].astype(float)
     #create monthly list of irradiance
-    #Apply the formula
+    siliken_solar_radiance = [3.41,4.0,4.70,5.10,5.54,5.94,6.25,5.95,5.44]
+    uni_solar_radiance = [2.53,3.22,4.24,5.01,5.82,6.41,6.59,5.96,4.98]
+
+    #Apply the formula to calculate energy conversion
+    monthly_df['Siliken_energy_conversion'] = monthly_df['Total_KW'] / (siliken_solar_radiance)
+    monthly_df['Siliken_energy_conversion'] = monthly_df['Siliken_energy_conversion'] / ev_solar_area
+    monthly_df['Uni_solar_energy_conversion'] = monthly_df['Total_KW'] / (uni_solar_radiance)
+    monthly_df['Uni_solar_energy_conversion'] = monthly_df['Uni_solar_energy_conversion'] / cambus_area
+
     #save the csv
+    monthly_df['Month'] = pd.to_datetime(monthly_df['Month']).dt.strftime('%b-%Y')
+    monthly_df.to_csv("data/solar_panel_compare.csv", index=False)
+    print(monthly_df)
 
 if __name__ == '__main__':
     main()
