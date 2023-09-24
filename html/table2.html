@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <nav>
-      <a href="past.html">Back</a>
-    </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css"> <!-- Move this line here -->
     <style>
       /* Center the table within the container */
       .center-table {
           margin: 0 auto;
       }
     </style>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SolarEnergyViz</title>
-  </head>
-  <body>
-    <table class="center-table" id="csvTable">
-      <thead>
-          <tr>
-              <th>Date</th>
-              <th>Hour</th>
-              <th>Total_KW</th>
-              <th>DNI(KWH)</th>
-              <th>Energy_conversion</th>
-          </tr>
-      </thead>
-      <tbody>
-      </tbody>
-  </table>
-  <script>
-    fetch('hourly_energy_conversion.csv')
-        .then(response => response.text())
-        .then(data => {
-            const table = document.querySelector('#csvTable tbody');
-            const rows = data.split('\n').slice(1);
+</head>
+<body>
+    <nav>
+        <a href="past.html">Back</a>
+    </nav>
 
-            rows.forEach(row => {
-                const cols = row.split(',');
-                const tr = document.createElement('tr');
-                cols.forEach(col => {
-                    const td = document.createElement('td');
-                    td.textContent = col;
-                    tr.appendChild(td);
+    <table class="center-table", cellspacing = 0 id="csvTable">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Hour</th>
+                <th>Total_KW</th>
+                <th>DNI(KWH)</th>
+                <th>Energy_conversion</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        fetch('hourly_energy_conversion.csv')
+            .then(response => response.text())
+            .then(data => {
+                const table = document.querySelector('#csvTable tbody');
+                const rows = data.split('\n').slice(1);
+
+                rows.forEach(row => {
+                    const cols = row.split(',');
+                    const tr = document.createElement('tr');
+                    cols.forEach(col => {
+                        const td = document.createElement('td');
+                        td.textContent = col;
+                        tr.appendChild(td);
+                    });
+                    table.appendChild(tr);
                 });
-                table.appendChild(tr);
             });
-        });
-  </script>
-  </body>
+    </script>
+</body>
 </html>
-<link rel="stylesheet" href="index.css">
-
-
