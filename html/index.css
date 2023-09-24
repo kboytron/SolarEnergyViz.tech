@@ -71,6 +71,12 @@ tr, td {
     padding: 0;
 }
 
+.new_tr{
+    font-size: medium;
+    border: 0.25px solid #ccc;
+    text-align: center;
+    padding: 0;
+}
 
 
 .center-table {
