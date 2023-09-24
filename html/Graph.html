@@ -6,48 +6,8 @@
   </nav>
   </head>
   <body>
-    <div>
-        <canvas id="myChart"></canvas>
-      </div>
-      
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      
-      <script>
-        // Fetch the JSON data from the file
-        fetch('https://github.com/dtemir/SolarEnergyViz.tech/blob/main/html/hourly_energy_conversion.json')
-            .then(response => response.json())
-            .then(data => {
-                const labels = data.map(entry => entry.Date + ' ' + entry.Hour + ':00');
-                const totalKW = data.map(entry => entry.Total_KW);
-    
-                const ctx = document.getElementById('myChart').getContext('2d');
-                const myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Total KW',
-                            data: totalKW,
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1,
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            x: {
-                                type: 'time',
-                                time: {
-                                    unit: 'hour'
-                                }
-                            }
-                        }
-                    }
-                });
-    
-                // Now you can add event listeners to filter the chart by year or other units.
-            });
-    </script>
+    <image src="plot-daily.png"></image>
+    <image src="plot-hourly.png"></image>
   </body>
   </html>
   <link rel="stylesheet" href="index.css">
