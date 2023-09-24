@@ -51,3 +51,16 @@ footer {
     display: inline-block;
 }
 
+m1{
+    color: #a9a9a9;
+    font-family: 'helvetica';
+    text-align: center;
+    padding: 10px;
+    font-size: medium;
+}
+.Maintext{
+    box-sizing: content-box;
+    width: 800px;
+    height: 800px;
+    margin: 10% auto
+}
