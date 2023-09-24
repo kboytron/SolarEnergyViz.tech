@@ -1,19 +1,28 @@
+/* Resetting default margins, padding, and fonts */
 body, html {
     margin: 0;
     padding: 0;
     font-family: 'copperplate';
     background: #000000;
 }
+
+/* Body styles */
 body {
-    color: #d9c214; 
+    color: #d9c214;
     font-size: xx-large;
 }
-.centered{ text-align: center;}
 
+/* Centered text class */
+.centered {
+    text-align: center;
+}
+
+/* Navigation styles */
 nav {
     text-align: center;
     background-color: #d9c214;
 }
+
 nav a {
     display: inline-block;
     text-decoration: none;
@@ -24,43 +33,48 @@ nav a {
 nav a + a {
     margin-left: 20px;
 }
-td{
+
+/* Table styles */
+td, th {
     border: 1px solid #ccc;
-            padding: 8px;
-            text-align: center;
-            font-size: xx-small;
+    padding: 8px;
+    text-align: center;
 }
-th{
-    border: 1px solid #ccc;
-            padding: 8px;
-            text-align: center;
-            font-size: medium;
+
+th {
+    font-size: medium;
 }
+
+/* Header styles */
 h1 {
     color: #c8b61a;
     font-family: 'copperplate';
 }
 
+/* Footer styles */
 footer {
     text-align: center;
     padding: 10px;
-    position: fixed; /* Fixed positioning to keep it at the bottom */
+    position: fixed;
     width: 100%;
-    left:   0;
+    left: 0;
     bottom: 0;
     display: inline-block;
 }
 
-m1{
+/* Generic div styles */
+div {
     color: #a9a9a9;
     font-family: 'helvetica';
+    margin-top: 0;
+    font-size: large;
     text-align: center;
-    padding: 10px;
-    font-size: medium;
 }
-.Maintext{
+
+/* Specific styles for .Maintext class */
+.Maintext {
     box-sizing: content-box;
     width: 800px;
     height: 800px;
-    margin: 10% auto
+    margin: 2% auto;
 }
