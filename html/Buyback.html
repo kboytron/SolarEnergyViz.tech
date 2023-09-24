@@ -12,10 +12,6 @@
         <title>SolarEnergyViz</title>
     </head>
 <body>
-    <header>
-        <h1 class="centered">Compare Poly-crystalline and triple junction amorphous solar panels</h1>
-    </header>
-
     <p>
         Enter 4 values and see how much money you could save by renting solar power
     </p>
@@ -32,7 +28,7 @@
         <input type="number" id="panelEfficiency" class="text-box" placeholder="Panel Efficiency (0-1)">
         <input type="number" id="localRadiance" class="text-box" placeholder="Local Radiance (kW/m²)">
         <input type="number" id="buybackRate" class="text-box" placeholder="Buyback Rate ($/kWh)">
-        <input type="button" title="Calculate" onclick="calculateSavings()">
+        <input type="button" value="Calculate" onclick="calculateSavings()" style="color: white;">
         <p id="result"></p>
     </div>
 
