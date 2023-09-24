@@ -49,7 +49,7 @@ tr, td {
 }
 
 .center-table{
-    margin-left: 500px;
+    align-content: center;
 }
 
 /* Header styles */
