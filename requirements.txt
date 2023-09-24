@@ -1,3 +1,6 @@
 pandas
 prophet
 plotly
+seaborn
+matplotlib
+mpld3
