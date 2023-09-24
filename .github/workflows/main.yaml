@@ -1,4 +1,4 @@
-name: Dynamically Clean Data
+name: Clean Data and Build Source
 
 on: workflow_dispatch
 
@@ -25,14 +25,29 @@ jobs:
     - name: Download NSRDB data (2011 - 2021)
       run: python nsrdb_data_download.py
 
+    - name: Predict NSRDB data for 2022 and 2023
+      run: python predict_dhi_2023.py
+
     - name: Clean the data
       run: python main.py
 
-    - name: Predict NSRDB data for 2022 and 2023
-      run: python main.py
+    - name: Create visualization
+      run: python visualize.py
+
+    - name: Check file structure (data)
+      run: ls -ltr data/
+
+    - name: Check file structure (html)
+      run: ls -ltr html/
 
     - name: Upload data directory as artifact
       uses: actions/upload-artifact@v2
       with:
         name: Data
         path: data/
+
+    - name: Upload html directory as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: HTML
+        path: html/
