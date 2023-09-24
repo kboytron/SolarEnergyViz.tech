@@ -77,11 +77,13 @@ def main():
     daily_df = daily_df.rename(columns={'EL_Solar_BusBarn_KWH_Dtot': 'KWH_Dtot'})
     daily_df['Date'] = pd.to_datetime(daily_df['Date'], format='%d-%b-%y %H:%M:%S', dayfirst=True)
     daily_df['Date'] = daily_df['Date'].dt.strftime('%d-%m-%y')
+    daily_df['Date'] = pd.to_datetime(daily_df['Date'], format='%d-%m-%y')
+    daily_df['Date'] = daily_df['Date'].dt.strftime('%Y-%m-%d')
 
     # Combine all radiance csv to one dataframe
     csv_files = ["data-2011.csv","data-2012.csv","data-2013.csv" ,"data-2014.csv"
     ,"data-2015.csv","data-2016.csv","data-2017.csv","data-2018.csv","data-2019.csv"
-    ,"data-2020.csv"]
+    ,"data-2020.csv", "data-2021.csv" , "data-2022.csv" , "data-2023.csv"]
     combined_irradiance_df = pd.DataFrame()
     dfs = []
     for csv_file in csv_files:
@@ -111,26 +113,38 @@ def main():
     # hourly energy conversion calculations
     # Convert the 'Hour' column in hourly_df to strings to match the data type
     hourly_df['Date'] = hourly_df['Date'].astype(str)
+    hourly_df['Hour'] = hourly_df['Hour'].astype(int)
     hourly_df['Hour'] = hourly_df['Hour'].astype(str)
-    combined_irradiance_df['Hour'] = combined_irradiance_df['Hour'].astype(str)
-    combined_irradiance_df['Date'] = combined_irradiance_df['Date'].astype(str)
-    merged_df = pd.merge(hourly_df, combined_irradiance_df, on=['Date', 'Hour'], how='left')
+    combined_irradiance_df = combined_irradiance_df.astype(str)
+    merged_df = pd.merge(hourly_df, combined_irradiance_df, on=['Date', 'Hour'], how='inner')
 
-    # Set the display precision for pandas
-    pd.set_option('display.float_format', '{:.4f}'.format)
-    # Calculate 'Energy_conversion' by dividing 'DNI(KWH)' by 'Total_KW' with a check for zero division
+    merged_df['Total_KW'] = merged_df['Total_KW'].astype(float)  # Calculate 'Energy_conversion' by dividing 'DNI(KWH)' by 'Total_KW' with a check for zero division
     merged_df['Energy_conversion'] = merged_df.apply(
-        lambda row: float(row['Total_KW']) / (float(row['DNI(KWH)']) * ev_solar_area) if row['DNI(KWH)'] != 0 else 0, axis=1)
+        lambda row: float(row['Total_KW']) / (float(row['DNI(KWH)']) * ev_solar_area) if float(row['DNI(KWH)']) != 0 else 0, axis=1)
 
     # Select and reorder columns in the final DataFrame
-    hourly_df = merged_df[['Date', 'Hour', 'Total_KW', 'Energy_conversion']]
+    hourly_df = merged_df[['Date', 'Hour', 'Total_KW','DNI(KWH)' ,'Energy_conversion']]
     hourly_df['Energy_conversion'].fillna(0, inplace=True)
 
     # Print the modified hourly_df
-    print(hourly_df)
     hourly_df.to_csv("data/hourly_energy_conversion.csv", index=False)
-    print("Computed and saved hourly conversions")
-    # Do yearly calculations
+    print("Computed and saved hourly energy conversions")
+
+    # Yearly calculations
+    combined_irradiance_df["DNI"] = combined_irradiance_df["DNI"].astype(float)
+    combined_irradiance_df["DNI(KWH)"] = combined_irradiance_df["DNI(KWH)"].astype(float)
+    grouped = combined_irradiance_df.groupby('Date')
+    daily_combined_irradiance_df = grouped[['DNI', 'DNI(KWH)']].sum().reset_index() #adds up hourly irradiance data into days
+    daily_merged_df = pd.merge(daily_df, daily_combined_irradiance_df, on=['Date'], how='inner')
+    daily_merged_df['KWH_Dtot'] = daily_merged_df['KWH_Dtot'].astype(float)
+    daily_merged_df['Energy_conversion'] = daily_merged_df.apply(
+        lambda row: float(row['KWH_Dtot']) / (float(row['DNI(KWH)']) * ev_solar_area) if float(
+            row['DNI(KWH)']) != 0 else 0, axis=1)
+
+    daily_df = daily_merged_df[['Date', 'KWH_Dtot','DNI(KWH)' ,'Energy_conversion']]
+    daily_df.to_csv("data/daily_energy_conversion.csv", index=False)
+    print(" Completed and saved Daily energy conversions")
+    # Step 3: Print the result
 
     # extract both dataframes to csv
 
