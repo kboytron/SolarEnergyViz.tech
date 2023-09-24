@@ -24,10 +24,17 @@ nav a {
 nav a + a {
     margin-left: 20px;
 }
-th, td{
+td{
     border: 1px solid #ccc;
             padding: 8px;
             text-align: center;
+            font-size: xx-small;
+}
+th{
+    border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            font-size: medium;
 }
 h1 {
     color: #c8b61a;
