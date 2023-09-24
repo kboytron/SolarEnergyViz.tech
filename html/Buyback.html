@@ -1,16 +1,55 @@
-<nav>
-    <a href="index.html">Back to Home</a>
+<!DOCTYPE html>
+<html lang="en">
+    <nav>
+        <a href="index.html">Back to Home</a>
     </nav>
-    <link rel="stylesheet" href="index.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="index.css">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <title>SolarEnergyViz</title>
+    </head>
+<body>
+    <header>
+        <h1 class="centered">Compare Poly-crystalline and triple junction amorphous solar panels</h1>
+    </header>
 
-    <body class="Maintext">
-        Enter a 3 values and see how much money you could save by renting solar power
-    </body>
+    <p>
+        Enter 4 values and see how much money you could save by renting solar power
+    </p>
 
-    <body>
-        <div class="grid-container">
-            <input type="text" class="text-box" placeholder="Solar Energy Produced (kWh)">
-            <input type="text" class="text-box" placeholder="Local Radiance (kW/m²)">
-            <input type="text" class="text-box" placeholder="Buyback Rate ($/kWh)">
-            <input type="button" title="Calculate">
-    </body>
+    <div id="formulas">
+        <!-- Formulas will be rendered here -->
+        \( \text{Energy Production (kWh)} = \text{Panel Efficiency} \times \text{Panel Area (m²)} \times \text{Local Radiance (kW/m²)} \times \text{Hours of Sunlight} \)
+        <br>
+        \( \text{Buyback Amount (\$)} = \text{Energy Production (kWh)} \times \text{Buyback Rate (\$/kWh)} \)
+    </div>
+
+    <div class="grid-container">
+        <input type="number" id="panelArea" class="text-box" placeholder="Panel Area (m²)">
+        <input type="number" id="panelEfficiency" class="text-box" placeholder="Panel Efficiency (0-1)">
+        <input type="number" id="localRadiance" class="text-box" placeholder="Local Radiance (kW/m²)">
+        <input type="number" id="buybackRate" class="text-box" placeholder="Buyback Rate ($/kWh)">
+        <input type="button" title="Calculate" onclick="calculateSavings()">
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function calculateSavings() {
+            let panelArea = document.getElementById('panelArea').value;
+            let panelEfficiency = document.getElementById('panelEfficiency').value;
+            let localRadiance = document.getElementById('localRadiance').value;
+            let buybackRate = document.getElementById('buybackRate').value;
+            let hoursOfSunlight = 5; // Assume an average of 5 hours of sunlight per day
+
+            let energyProduction = panelEfficiency * panelArea * localRadiance * hoursOfSunlight;
+            let earnings = energyProduction * buybackRate;
+
+            document.getElementById('result').innerText = `You can earn $${earnings.toFixed(2)} by selling ${energyProduction.toFixed(2)} kWh of solar energy at a buyback rate of $${buybackRate}/kWh.`;
+        }
+    </script>
+    
+</body>
+</html>

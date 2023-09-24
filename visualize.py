@@ -49,3 +49,28 @@ plt.tick_params(colors='white')
 # Save the plot as a .png file
 plt.savefig('html/plot-hourly.png', transparent=True)
 
+# comparison 
+
+# Load the data into a pandas DataFrame
+data_compare = pd.read_csv("data/solar_panel_compare.csv")
+
+# Create a line plot for Siliken and Uni Solar Energy Conversion
+fig = plt.figure(figsize=(10, 6))
+sns.lineplot(data=data_compare, x="Month", y="Siliken_energy_conversion", color="yellow", label="Siliken")
+sns.lineplot(data=data_compare, x="Month", y="Uni_solar_energy_conversion", color="orange", label="Uni Solar")
+
+# Set the title with white color
+plt.title('Energy Conversion Over Time', color='white')
+
+# Setting the label colors to white
+plt.xlabel('Month', color='white')
+plt.ylabel('Energy Conversion', color='white')
+
+# Setting the tick parameters to have white color
+plt.tick_params(colors='white')
+
+# Adding the legend with white color
+plt.legend(loc='upper right', facecolor='black', edgecolor='white', fontsize='medium', framealpha=1)
+
+# Save the plot as a .png file with a transparent background
+plt.savefig('html/plot-energy_conversion.png', transparent=True)
