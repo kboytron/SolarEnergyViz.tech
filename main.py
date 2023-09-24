@@ -128,6 +128,7 @@ def main():
     hourly_df["DNI(KWH)"] = hourly_df['DNI(KWH)'].astype(float)
     # Remove rows where 'DNI(KWH)' is greater than 100
     hourly_df = hourly_df[hourly_df['DNI(KWH)'] <= 100]
+    hourly_df = hourly_df[hourly_df['Total_KW'] <= 100]
     # Reset the index if needed
     hourly_df.reset_index(drop=True, inplace=True)
     # Print the modified hourly_df
@@ -154,7 +155,10 @@ def main():
     print("Completed and saved Daily energy conversions")
 
     # <<<<<< Comparing Both Solar Panels >>>>>>>
-
+    #create monthly data
+    #create monthly list of irradiance
+    #Apply the formula
+    #save the csv
 
 if __name__ == '__main__':
     main()
