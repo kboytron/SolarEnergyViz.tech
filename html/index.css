@@ -97,7 +97,10 @@ footer {
     display: inline-block;
 }
 a{
-    color:#a9a9a9
+    color:#000000
+}
+.link{
+    color: #a9a9a9;
 }
 /* Generic div styles */
 div {
