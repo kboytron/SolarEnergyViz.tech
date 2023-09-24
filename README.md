@@ -4,11 +4,13 @@
 
 Engie challenge with sprinkes of GitHubOps, DevOps, and WebDev.
 
+![overview](https://github.com/dtemir/SolarEnergyViz.tech/assets/62047062/be1afa3b-c60e-49f5-a23d-a9087b6ccfee)
+
 # Challenges
 
 Some of the challenges we faced while working on the Engie challenge:
 
-## Excel Data 
+## Missing Values
 
 Some of the data wasn't clean. 
 
@@ -17,6 +19,12 @@ We found missing variables, such as `Calc Failed` and `[-11059] No Good Data For
 For `Calc Failed`, we calculated the value by adding daily hours into totals.
 
 For `[-11059] No Good Data For Calculation`, we used that day's total, subtracted all of the other hours, and split the difference among the hours that had that value.
+
+## Extremely High Values
+
+Some of the data provided contained very high values, such as `2.38572E+30`. We made sure to filter that data out as to not skew calculations.
+
+All of that data seem to happen during night-time when the kWH records would have been very low. 
 
 ## NSRDB not accounting for tilt, azimuth
 
