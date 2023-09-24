@@ -42,6 +42,11 @@ h1 {
 }
 
 footer {
-    text-align: end;
-
+    text-align: center;
+    padding: 10px;
+    position: fixed; /* Fixed positioning to keep it at the bottom */
+    width: 100%;
+    left:   0;
+    bottom: 0;
+    display: inline-block;
 }
