@@ -49,11 +49,7 @@ tr, td {
     padding: 0;
 }
 
-/* Remove spacing between table cells */
-th, tr, td {
-    border-collapse: separate;
-    border-spacing: 0;
-}
+
 
 .center-table {
     align-content: center; /* Check if 'align-content' is needed here */
