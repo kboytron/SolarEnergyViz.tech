@@ -23,14 +23,14 @@ nav {
     background-color: #d9c214;
 }
 
-nav a {
+nav m {
     display: inline-block;
     text-decoration: none;
     color: #000000;
     padding: 10px 20px;
 }
 
-nav a + a {
+nav m + m {
     margin-left: 20px;
 }
 
@@ -50,9 +50,7 @@ nav a + a {
     color: #a9a9a9;
     padding: 10px 20px;
     text-align: center; /* Center the text within each item */
-    background-color: #000000;
-
-    
+    background-color: #000000; 
 }
 
 
@@ -98,7 +96,9 @@ footer {
     bottom: 0;
     display: inline-block;
 }
-
+a{
+    color:#a9a9a9
+}
 /* Generic div styles */
 div {
     color: #a9a9a9;
