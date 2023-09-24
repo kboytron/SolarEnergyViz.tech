@@ -40,15 +40,18 @@ nav a + a {
     grid-template-columns: repeat(2, 1fr); /* Two columns */
     grid-template-rows: repeat(2, auto); /* Two rows, adjust as needed */
     gap: 10px; /* Adjust the gap between items */
+
 }
 
 /* Style for the nav items within AboutText */
 .nav-item {
     display: inline-block;
     text-decoration: none;
-    color: #000000;
+    color: #a9a9a9;
     padding: 10px 20px;
     text-align: center; /* Center the text within each item */
+    background-color: #000000;
+
     
 }
 
